@@ -11,8 +11,16 @@ const firebaseConfig = {
   
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  
-  
+  username=localStorage.getItem("username");
+  document.getElementById("username").innerHTML="Welcome "+username+" !";
+  function addRoom(){
+        room_name=document.getElementById("room_name").value;
+        firebase.database().ref("/").child(room_name).update({
+              purpose:"adding room name"
+        });
+        localStorage.setItem("room_name",room_name);
+        window.location="kwitterpage.html";
+  }
   
   function logout(){
     localStorage.removeItem("user_name")  ;
