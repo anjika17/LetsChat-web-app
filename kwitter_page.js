@@ -1,16 +1,16 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyB3A8wHO-yxUw-0TpZpljtg9-H7JwwzxVA",
-    authDomain: "letschat-web-app-e8d24.firebaseapp.com",
-    databaseURL: "https://letschat-web-app-e8d24-default-rtdb.firebaseio.com",
-    projectId: "letschat-web-app-e8d24",
-    storageBucket: "letschat-web-app-e8d24.appspot.com",
-    messagingSenderId: "380954193613",
-    appId: "1:380954193613:web:a84f604542b448641a8384",
-    measurementId: "G-VKHTG032CF"
-  };
-  
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+var firebaseConfig = {
+      apiKey: "AIzaSyB1c_Z5rPXZhVh5ZHTZ1H_NYk5grtyOuQ4",
+      authDomain: "letschat-web-app-2f33d.firebaseapp.com",
+      databaseURL: "https://letschat-web-app-2f33d-default-rtdb.firebaseio.com",
+      projectId: "letschat-web-app-2f33d",
+      storageBucket: "letschat-web-app-2f33d.appspot.com",
+      messagingSenderId: "340190534960",
+      appId: "1:340190534960:web:9122942a78089612333cf5",
+      measurementId: "G-5EGJECKR22"
+    };
+    
+    
+ firebase.initializeApp(firebaseConfig);
   username=localStorage.getItem("username");
   document.getElementById("username").innerHTML="Welcome "+username+" !";
   function addRoom(){
@@ -19,9 +19,28 @@ const firebaseConfig = {
               purpose:"adding room name"
         });
         localStorage.setItem("room_name",room_name);
-        window.location="kwitterpage.html";
+        window.location.replace='chatpage.html';
   }
-  
+
+  function getData(){
+        firebase.database().ref("/").on('value' ,function(snapshot){
+              document.getElementById("output").innerHTML="";
+              snapshot.forEach(function(childSnapshot){
+                    childKey=childSnapshot.key ;
+                    Room_names=childKey;
+                    console.log("room name"+Room_names);
+                    row="<div class='room_name' id="+ Room_names+"onclick='redirectToRoomName(this.id)'>#"+Room_names+"</div><hr>" ;
+                    document.getElementById("output").innerHTML+=row ;
+              }) ;
+        }) ;
+  }
+  getData() ;
+  function redirectToRoomName(name){
+        console.log(name);
+        localStorage.setItem("room_name" , name);
+        window.location="chatpage.html" ;
+  }
+
   function logout(){
     localStorage.removeItem("user_name")  ;
     localStorage.removeItem("room_name")   ;
